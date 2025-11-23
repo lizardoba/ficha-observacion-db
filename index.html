@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Observación - Gniius</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FFB6E1 0%, #87CEEB 50%, #98FF98 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 150, 200, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #FFD700 0%, #FF69B4 50%, #87CEEB 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 4px solid #FF69B4;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            background: linear-gradient(135deg, #87CEEB 0%, #98FF98 100%);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-size: 1em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-nav:hover {
+            background: linear-gradient(135deg, #FFD700 0%, #FF69B4 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 105, 180, 0.3);
+        }
+
+        .btn-nav.active {
+            background: linear-gradient(135deg, #FF69B4 0%, #FFD700 100%);
+        }
+
+        .content {
+            padding: 40px 20px;
+        }
+
+        .vista {
+            display: none;
+        }
+
+        .vista.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .ficha-card {
+            background: linear-gradient(135deg, #FFE4E1 0%, #F0FFFF 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #FF69B4;
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
+        }
+
+        .ficha-card h3 {
+            color: #FF69B4;
+            margin-bottom: 10px;
+        }
+
+        .ficha-card-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #333;
+            border: 2px solid #FF8C00;
+        }
+
+        .btn-edit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF4444 100%);
+            color: white;
+            border: 2px solid #FF3333;
+        }
+
+        .btn-delete:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.3);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #98FF98 0%, #90EE90 100%);
+            color: #333;
+            border: 2px solid #228B22;
+        }
+
+        .btn-save:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(34, 139, 34, 0.3);
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+            color: #333;
+            border: 2px solid #FF69B4;
+        }
+
+        .btn-cancel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+        }
+
+        form {
+            background: #f9f9ff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #FF69B4;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #87CEEB;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #FF69B4;
+            box-shadow: 0 0 8px rgba(255, 105, 180, 0.3);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        h2 {
+            color: #FF69B4;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #FFD700;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ficha de Observación</h1>
+            <p>Centro Integral Infantil y Familiar - Gniius</p>
+            <nav>
+                <button class="btn-nav active" onclick="showVista('nueva')">Nueva Ficha</button>
+                <button class="btn-nav" onclick="showVista('misfichas')">Mis Fichas</button>
+            </nav>
+        </header>
+
+        <div class="content">
+            <!-- Vista Nueva Ficha -->
+            <div id="nueva" class="vista active">
+                <h2>Crear Nueva Ficha de Observación</h2>
+                <form id="formFicha" onsubmit="guardarFicha(event)">
+                    <div class="form-group">
+                        <label for="nombre">Nombre del niño/a:</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edad">Edad:</label>
+                        <input type="text" id="edad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha de Observación:</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones:</label>
+                        <textarea id="observaciones" rows="6" required></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-save">Guardar Ficha</button>
+                        <button type="button" class="btn btn-cancel" onclick="limpiarFormulario()">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Vista Mis Fichas -->
+            <div id="misifichas" class="vista">
+                <h2>Fichas Guardadas</h2>
+                <div id="listaFichas"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cargar fichas al iniciar
+        document.addEventListener('DOMContentLoaded', cargarFichas);
+
+        function guardarFicha(event) {
+            event.preventDefault();
+
+            const ficha = {
+                id: Date.now(),
+                nombre: document.getElementById('nombre').value,
+                edad: document.getElementById('edad').value,
+                fecha: document.getElementById('fecha').value,
+                observaciones: document.getElementById('observaciones').value
+            };
+
+            let fichas = JSON.parse(localStorage.getItem('fichas')) || [];
+            fichas.push(ficha);
+            localStorage.setItem('fichas', JSON.stringify(fichas));
+
+            alert('Ficha guardada exitosamente');
+            limpiarFormulario();
+            cargarFichas();
+        }
+
+        function cargarFichas() {
+            const fichas = JSON.parse(localStorage.getItem('fichas')) || [];
+            const listaFichas = document.getElementById('listaFichas');
+            listaFichas.innerHTML = '';
+
+            if (fichas.length === 0) {
+                listaFichas.innerHTML = '<p>No hay fichas guardadas aún.</p>';
+                return;
+            }
+
+            fichas.forEach(ficha => {
+                const div = document.createElement('div');
+                div.className = 'ficha-card';
+                div.innerHTML = `
+                    <h3>${ficha.nombre}</h3>
+                    <p><strong>Edad:</strong> ${ficha.edad}</p>
+                    <p><strong>Fecha:</strong> ${ficha.fecha}</p>
+                    <p><strong>Observaciones:</strong> ${ficha.observaciones}</p>
+                    <div class="ficha-card-buttons">
+                        <button class="btn btn-edit" onclick="editarFicha(${ficha.id})">Editar</button>
+                        <button class="btn btn-delete" onclick="eliminarFicha(${ficha.id})">Eliminar</button>
+                    </div>
+                `;
+                listaFichas.appendChild(div);
+            });
+        }
+
+        function eliminarFicha(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta ficha?')) {
+                let fichas = JSON.parse(localStorage.getItem('fichas')) || [];
+                fichas = fichas.filter(f => f.id !== id);
+                localStorage.setItem('fichas', JSON.stringify(fichas));
+                cargarFichas();
+                alert('Ficha eliminada');
+            }
+        }
+
+        function editarFicha(id) {
+            const fichas = JSON.parse(localStorage.getItem('fichas')) || [];
+            const ficha = fichas.find(f => f.id === id);
+            
+            if (ficha) {
+                document.getElementById('nombre').value = ficha.nombre;
+                document.getElementById('edad').value = ficha.edad;
+                document.getElementById('fecha').value = ficha.fecha;
+                document.getElementById('observaciones').value = ficha.observaciones;
+                
+                eliminarFicha(id);
+                showVista('nueva');
+            }
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('formFicha').reset();
+        }
+
+        function showVista(vista) {
+            const vistas = document.querySelectorAll('.vista');
+            vistas.forEach(v => v.classList.remove('active'));
+            
+            const botones = document.querySelectorAll('.btn-nav');
+            botones.forEach(b => b.classList.remove('active'));
+
+            if (vista === 'nueva') {
+                document.getElementById('nueva').classList.add('active');
+                botones[0].classList.add('active');
+            } else if (vista === 'misifichas') {
+                document.getElementById('misifichas').classList.add('active');
+                botones[1].classList.add('active');
+                cargarFichas();
+            }
+        }
+    </script>
+</body>
+</html>
